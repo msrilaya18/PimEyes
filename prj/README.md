@@ -77,5 +77,17 @@ PimEyes occasionally triggers a CAPTCHA (such as Turnstile or hCaptcha) when it 
 3. Open your browser and navigate to `http://localhost:3000`.
 4. Upload an image and click "Start Automated Search".
 
-## 🚧 Handling the "Payment Wall"
-As requested, the automation is designed to handle the flow up to the point of the payment wall/results page. The script waits for the `results` URL, pauses to allow images to load, and then captures a screenshot of the blurred/free results to prove the search was successfully initiated and completed.
+## 🚀 Cloud Deployment (Docker)
+This repository includes a `Dockerfile` optimized for hosting headless Playwright applications (such as on Render, Railway, or Koyeb).
+
+### Deploying to Render (Free Tier):
+1. Create a free account at [render.com](https://render.com).
+2. Click **New +** and select **Web Service**.
+3. Connect this GitHub repository.
+4. Set the following options:
+   - **Runtime**: `Docker` *(Render will automatically build and configure your environment using our Dockerfile)*.
+   - **Instance Type**: `Free`.
+5. Click **Deploy Web Service**. Render will install all dependencies, configure Chromium, and launch the server.
+
+---
+*Developed as part of the Automation Engineer Selection Process.*
