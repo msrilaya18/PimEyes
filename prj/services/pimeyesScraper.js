@@ -71,23 +71,20 @@ async function searchPimEyes(imagePath) {
         // After uploading, we agree to terms
         console.log(`[+] Handling checkboxes and terms...`);
         try {
-            // Wait for checkbox labels to be visible (indicates upload modal is open)
-            await page.waitForSelector('label.checkbox', { state: 'visible', timeout: 15000 });
-            
-            // Find all input checkboxes inside label.checkbox
-            const checkboxes = page.locator('label.checkbox input[type="checkbox"]');
-            const count = await checkboxes.count();
-            console.log(`[+] Found ${count} checkbox inputs inside labels.`);
-            
-            // We want to check the ones that are inside visible labels
+            // Find all checkbox labels
             const labels = page.locator('label.checkbox');
+            const count = await labels.count();
+            console.log(`[+] Found ${count} total checkbox labels.`);
+            
+            let checkedCount = 0;
             for (let i = 0; i < count; i++) {
                 const label = labels.nth(i);
                 if (await label.isVisible()) {
-                    console.log(`[+] Programmatically checking checkbox ${i + 1}...`);
-                    const cb = checkboxes.nth(i);
+                    console.log(`[+] Programmatically checking visible checkbox ${checkedCount + 1}...`);
+                    const cb = label.locator('input[type="checkbox"]').first();
                     await cb.check({ force: true });
                     await page.waitForTimeout(500);
+                    checkedCount++;
                 }
             }
 
