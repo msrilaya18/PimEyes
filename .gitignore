@@ -1,0 +1,13 @@
+prj/node_modules/
+prj/public/results/videos/*
+prj/public/results/*.png
+prj/uploads/*
+package-lock.json
+
+# Ignore SCM course materials and other local assets
+*.pdf
+c1/
+c2/
+prj_original/
+proj files/
+face.jpg

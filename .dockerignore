@@ -1,0 +1,6 @@
+prj/node_modules
+prj/public/results/videos/*
+prj/public/results/*.png
+prj/uploads/*
+.git
+.github
