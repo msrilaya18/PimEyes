@@ -11,13 +11,13 @@ chromium.use(stealth);
  * @param {string} imagePath - Path to the image file to search
  * @returns {Promise<object>} - Results containing screenshot path
  */
-async function searchPimEyes(imagePath) {
-    console.log(`[+] Starting PimEyes automation with image: ${imagePath}`);
+async function searchPimEyes(imagePath, headless = true) {
+    console.log(`[+] Starting PimEyes automation with image: ${imagePath} (headless: ${headless})`);
     let browser;
     try {
         // Launch stealth browser
         browser = await chromium.launch({ 
-            headless: true, // Use true for production, false for debugging
+            headless: headless,
             args: ['--no-sandbox', '--disable-setuid-sandbox'] 
         });
         

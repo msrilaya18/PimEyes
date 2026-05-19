@@ -43,10 +43,11 @@ app.post('/api/search', upload.single('image'), async (req, res) => {
         }
 
         const imagePath = req.file.path;
-        console.log(`[+] Received image for search: ${imagePath}`);
+        const headless = req.body.headless !== 'false'; // defaults to true
+        console.log(`[+] Received image for search: ${imagePath} (headless: ${headless})`);
 
         // Call the automation scraper
-        const result = await searchPimEyes(imagePath);
+        const result = await searchPimEyes(imagePath, headless);
 
         // Optionally, clean up the uploaded image after processing
         // fs.unlinkSync(imagePath);

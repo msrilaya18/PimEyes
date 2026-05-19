@@ -52,13 +52,19 @@ function addLog(message, isError = false) {
 }
 
 // Handle form submission
+let startTime;
 uploadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     if (!fileInput.files[0]) return;
 
+    startTime = Date.now();
+    const headlessToggle = document.getElementById('headless-toggle');
+    const isHeadless = headlessToggle ? headlessToggle.checked : true;
+
     const formData = new FormData();
     formData.append('image', fileInput.files[0]);
+    formData.append('headless', isHeadless);
 
     // UI transitions
     uploadSection.style.display = 'none';
@@ -84,11 +90,14 @@ uploadForm.addEventListener('submit', async (e) => {
         if (response.ok && result.success) {
             addLog('Search complete. Results captured successfully.');
             
+            const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+            
             // Show results
             setTimeout(() => {
                 statusSection.style.display = 'none';
                 resultsSection.style.display = 'block';
                 document.getElementById('result-screenshot').src = result.data.screenshotUrl;
+                document.getElementById('metric-duration').textContent = `${duration}s`;
                 
                 const videoEl = document.getElementById('result-video');
                 const btnVideo = document.getElementById('btn-video');
@@ -135,4 +144,22 @@ btnVideo.addEventListener('click', () => {
     btnScreenshot.classList.remove('active');
     resultScreenshot.style.display = 'none';
     resultVideo.style.display = 'block';
+});
+
+// Download Logs as Text File
+const btnDownloadLogs = document.getElementById('btn-download-logs');
+btnDownloadLogs.addEventListener('click', () => {
+    const logLines = Array.from(document.querySelectorAll('.log-line'))
+        .map(el => el.textContent)
+        .join('\n');
+    
+    const blob = new Blob([logLines], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `pimeyes-automation-${Date.now()}.log`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 });
