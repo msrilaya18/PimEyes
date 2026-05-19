@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+uploads/*
+!uploads/.gitkeep
+public/results/*
+!public/results/.gitkeep
+.git
+.dockerignore
+Dockerfile
+test_scraper.js
+debug_scraper.js
+scratch/

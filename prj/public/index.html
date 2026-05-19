@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PimEyes Automation System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>PimEyes <span class="highlight">AutoPilot</span></h1>
+            <p>Advanced Reverse Image Search Automation Engine</p>
+        </header>
+
+        <main>
+            <div class="glass-panel">
+                <div class="upload-section" id="upload-section">
+                    <form id="upload-form">
+                        <div class="file-drop-area" id="file-drop-area">
+                            <div class="icon-upload">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                            <h3>Upload Target Image</h3>
+                            <span class="file-msg">Drag and drop or click to browse</span>
+                            <input class="file-input" type="file" id="image-input" accept="image/*" required>
+                        </div>
+                        
+                        <div class="preview-container" id="preview-container" style="display: none;">
+                            <img id="image-preview" src="" alt="Target Preview">
+                        </div>
+
+                        <button type="submit" class="primary-btn" id="submit-btn" disabled>
+                            <span>Initiate Automation</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="status-section" id="status-section" style="display: none;">
+                    <div class="status-header">
+                        <div class="spinner"></div>
+                        <div>
+                            <h3 id="status-text">Bypassing Security & Navigating...</h3>
+                            <p class="status-subtext">Playwright Stealth Engine Active</p>
+                        </div>
+                    </div>
+                    
+                    <div class="terminal-mockup">
+                        <div class="terminal-header">
+                            <div class="window-controls">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="terminal-title">automation.log</div>
+                        </div>
+                        <div class="terminal-body" id="terminal-logs">
+                            <p class="log-line">> System initialized. Awaiting payload.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-section" id="results-section" style="display: none;">
+                    <div class="success-banner">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <h2>Workflow Completed</h2>
+                    </div>
+                    <div class="result-image-wrapper">
+                        <div class="tab-controls">
+                            <button id="btn-screenshot" class="tab-btn active" type="button">Final Screenshot</button>
+                            <button id="btn-video" class="tab-btn" type="button">Live Automation Video</button>
+                        </div>
+                        <img id="result-screenshot" src="" alt="PimEyes Search Results">
+                        <video id="result-video" src="" controls style="display: none; width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 32px 0 rgba(0,0,0,0.5);"></video>
+                    </div>
+                    <button class="secondary-btn" onclick="location.reload()">Start New Workflow</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Architected for scale. Built with Node.js & Playwright.</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
