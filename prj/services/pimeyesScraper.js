@@ -44,12 +44,23 @@ async function searchPimEyes(imagePath) {
         // Accept Cookie Banner if it exists
         try {
             const cookieButton = page.locator('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll, button:has-text("Allow all"), button:has-text("Accept all"), button:has-text("Accept")').first();
-            await cookieButton.waitFor({ state: 'visible', timeout: 5000 });
+            await cookieButton.waitFor({ state: 'visible', timeout: 8000 });
             console.log(`[+] Cookie banner found, accepting...`);
-            await cookieButton.click();
+            await cookieButton.click({ force: true });
             await page.waitForTimeout(1000);
         } catch (e) {
-            console.log(`[!] No cookie banner appeared within 5s. Proceeding...`);
+            console.log(`[!] No cookie banner accepted via click:`, e.message);
+        }
+
+        // Programmatically remove any remaining Cookiebot elements to prevent click interception
+        try {
+            await page.evaluate(() => {
+                const overlays = document.querySelectorAll('[id*="CybotCookiebot"], [class*="Cookiebot"], .cookie-consent, #cookie-law-info-bar');
+                overlays.forEach(el => el.remove());
+                console.log('[-] Removed cookie overlay elements from DOM.');
+            });
+        } catch (e) {
+            console.log(`[!] Failed to remove cookie overlay elements:`, e.message);
         }
 
         // Upload image
@@ -63,15 +74,19 @@ async function searchPimEyes(imagePath) {
             // Wait for checkbox labels to be visible (indicates upload modal is open)
             await page.waitForSelector('label.checkbox', { state: 'visible', timeout: 15000 });
             
-            const checkboxes = page.locator('label.checkbox');
+            // Find all input checkboxes inside label.checkbox
+            const checkboxes = page.locator('label.checkbox input[type="checkbox"]');
             const count = await checkboxes.count();
-            console.log(`[+] Found ${count} consent checkbox labels.`);
+            console.log(`[+] Found ${count} checkbox inputs inside labels.`);
             
+            // We want to check the ones that are inside visible labels
+            const labels = page.locator('label.checkbox');
             for (let i = 0; i < count; i++) {
-                const cb = checkboxes.nth(i);
-                if (await cb.isVisible()) {
-                    console.log(`[+] Clicking visible checkbox label ${i + 1}...`);
-                    await cb.click();
+                const label = labels.nth(i);
+                if (await label.isVisible()) {
+                    console.log(`[+] Programmatically checking checkbox ${i + 1}...`);
+                    const cb = checkboxes.nth(i);
+                    await cb.check({ force: true });
                     await page.waitForTimeout(500);
                 }
             }
@@ -82,7 +97,7 @@ async function searchPimEyes(imagePath) {
             const startSearchButton = page.locator('button:has-text("Start Search")').first();
             if (await startSearchButton.isVisible()) {
                 console.log(`[+] Search button is visible, clicking...`);
-                await startSearchButton.click();
+                await startSearchButton.click({ force: true });
             } else {
                 console.log(`[!] Search button not visible, attempting JS click...`);
                 await page.evaluate(() => {
