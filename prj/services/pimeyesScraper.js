@@ -90,6 +90,19 @@ async function searchPimEyes(imagePath, headless = true) {
 
             await page.waitForTimeout(1000);
 
+            // Check for Cloudflare Turnstile iframe above the button
+            try {
+                console.log(`[+] Scanning for Cloudflare Turnstile verification...`);
+                const turnstileIframe = page.frameLocator('iframe[src*="challenges.cloudflare.com"]').first();
+                const turnstileCheckbox = turnstileIframe.locator('#challenge-stage, .ctp-checkbox-label, input[type="checkbox"]').first();
+                await turnstileCheckbox.waitFor({ state: 'visible', timeout: 6000 });
+                console.log(`[+] Turnstile checkbox found, clicking "I am human"...`);
+                await turnstileCheckbox.click({ force: true });
+                await page.waitForTimeout(3000);
+            } catch (iframeErr) {
+                console.log(`[!] Turnstile checkbox not visible or not interactive:`, iframeErr.message);
+            }
+
             // Click the "Start Search" button
             const startSearchButton = page.locator('button:has-text("Start Search")').first();
             if (await startSearchButton.isVisible()) {
