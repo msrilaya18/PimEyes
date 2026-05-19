@@ -18,7 +18,12 @@ async function searchPimEyes(imagePath, headless = true) {
         // Launch stealth browser
         browser = await chromium.launch({ 
             headless: headless,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] 
+            args: [
+                '--no-sandbox', 
+                '--disable-setuid-sandbox', 
+                '--disable-dev-shm-usage', 
+                '--disable-gpu'
+            ] 
         });
         
         // Setup video recording directory
@@ -83,11 +88,15 @@ async function searchPimEyes(imagePath, headless = true) {
             for (let i = 0; i < count; i++) {
                 const label = labels.nth(i);
                 if (await label.isVisible()) {
-                    console.log(`[+] Programmatically checking visible checkbox ${checkedCount + 1}...`);
-                    const cb = label.locator('input[type="checkbox"]').first();
-                    await cb.check({ force: true });
-                    await page.waitForTimeout(500);
-                    checkedCount++;
+                    try {
+                        console.log(`[+] Programmatically checking visible checkbox ${checkedCount + 1}...`);
+                        const cb = label.locator('input[type="checkbox"]').first();
+                        await cb.check({ force: true, timeout: 3000 });
+                        await page.waitForTimeout(500);
+                        checkedCount++;
+                    } catch (cbErr) {
+                        console.log(`[!] Failed to check checkbox ${checkedCount + 1}:`, cbErr.message);
+                    }
                 }
             }
 
