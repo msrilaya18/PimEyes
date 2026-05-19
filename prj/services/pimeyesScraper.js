@@ -71,6 +71,9 @@ async function searchPimEyes(imagePath, headless = true) {
         // After uploading, we agree to terms
         console.log(`[+] Handling checkboxes and terms...`);
         try {
+            // Wait for checkbox labels to be visible (indicates upload modal is open)
+            await page.waitForSelector('label.checkbox', { state: 'visible', timeout: 15000 });
+
             // Find all checkbox labels
             const labels = page.locator('label.checkbox');
             const count = await labels.count();
