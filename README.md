@@ -1,8 +1,8 @@
-# PimEyes AutoPilot: Advanced Search Automation
+# 🤖 PimEyes AutoPilot: Advanced Search Automation
 
 A production-grade reverse image search automation engine designed for PimEyes. Built with a dark-glass dashboard, real-time terminal log stream, browser recording playback, and advanced anti-bot evasion.
 
-## System Architecture
+## ⚡ System Architecture
 
 ```mermaid
 graph TD
@@ -16,7 +16,7 @@ graph TD
     B -- 8. Returns results and video stream --> A
 ```
 
-## Features
+## ✨ Features
 
 - **Playwright Stealth Integration:** Spoof user-agents, hide automation footprints, mimic real WebGL and Canvas rendering parameters, and randomize delays to evade Cloudflare browser fingerprinting.
 - **Dynamic Cookiebot Bypass:** Programmatically wipe blocking overlay dialogs and sync dynamic state-bindings on Terms and Conditions checkboxes.
@@ -27,7 +27,7 @@ graph TD
 - **Session Log Exporter:** Feature a button to package terminal logs into a clean, timestamped log file for immediate local download.
 - **Developer Headless Toggle:** Include a switch enabling developers to toggle headless mode off for visual desktop debugging.
 
-## Reverse Engineering and Network Analysis
+## 🕵️‍♂️ Reverse Engineering and Network Analysis
 
 Using HTTP Toolkit to intercept network calls, the request-response lifecycle was reverse-engineered to identify core automation friction points:
 
@@ -37,7 +37,7 @@ PimEyes uses a multi-tier consent wall requiring user agreement on terms of serv
 ### 2. TLS and JA3 Fingerprinting
 Attempts to execute direct HTTP POST requests to the upload endpoint via Axios or Python libraries are blocked instantly with a 403 Forbidden response. Cloudflare analyzes the TLS Client Hello handshake (JA3 fingerprint) and flags non-browser clients. The engine runs the search inside a Playwright-controlled browser, allowing Cloudflare to naturally negotiate the handshake and validate TLS signatures while we execute DOM automation.
 
-## Local Installation
+## 📦 Local Installation
 
 ### Prerequisites
 - Node.js (version 18 or higher)
@@ -47,7 +47,7 @@ Attempts to execute direct HTTP POST requests to the upload endpoint via Axios o
 1. Clone the repository and navigate to the project directory:
    ```bash
    git clone https://github.com/msrilaya18/PimEyes.git
-   cd PimEyes/prj
+   cd PimEyes
    ```
 
 2. Install dependencies:
@@ -63,7 +63,7 @@ Attempts to execute direct HTTP POST requests to the upload endpoint via Axios o
 4. Access the web dashboard at:
    http://localhost:3000
 
-## Cloud Deployment (Docker and Railway)
+## 🐋 Cloud Deployment (Docker and Railway)
 
 This repository includes a multi-stage Dockerfile optimized for headless browser runners.
 
