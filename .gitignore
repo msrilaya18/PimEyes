@@ -1,13 +1,19 @@
-prj/node_modules/
-prj/public/results/videos/*
-prj/public/results/*.png
-prj/uploads/*
-package-lock.json
+node_modules/
+uploads/*
+!uploads/.gitkeep
+public/results/*
+!public/results/.gitkeep
+.env
+.DS_Store
+*.log
+test_scraper.js
 
-# Ignore SCM course materials and other local assets
+# Ignore academic SCM files
 *.pdf
 c1/
 c2/
 prj_original/
 proj files/
-face.jpg
+*.mp4
+*.webm
+

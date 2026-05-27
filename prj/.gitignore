@@ -1,9 +1,0 @@
-node_modules/
-uploads/*
-!uploads/.gitkeep
-public/results/*
-!public/results/.gitkeep
-.env
-.DS_Store
-*.log
-test_scraper.js

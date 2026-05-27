@@ -4,17 +4,18 @@ FROM node:18-bullseye-slim
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy package.json from prj folder
-COPY prj/package*.json ./
+# Copy package.json and package-lock.json (if present)
+COPY package*.json ./
 
 # Install npm dependencies
 RUN npm install
 
 # Install Playwright and its OS dependencies specifically for Chromium
+# This keeps the image size smaller by only installing the Chromium browser
 RUN npx playwright install --with-deps chromium
 
-# Copy all project files from prj into the container
-COPY prj/ .
+# Copy all project files into the container
+COPY . .
 
 # Create the uploads and results directories to ensure they exist
 RUN mkdir -p uploads public/results

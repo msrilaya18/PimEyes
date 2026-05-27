@@ -1,6 +1,12 @@
-prj/node_modules
-prj/public/results/videos/*
-prj/public/results/*.png
-prj/uploads/*
+node_modules
+npm-debug.log
+uploads/*
+!uploads/.gitkeep
+public/results/*
+!public/results/.gitkeep
 .git
-.github
+.dockerignore
+Dockerfile
+test_scraper.js
+debug_scraper.js
+scratch/
